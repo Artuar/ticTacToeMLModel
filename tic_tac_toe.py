@@ -74,20 +74,25 @@ def calculate_position_values(board: Board, player: str, deep: int = 0) -> Dict[
 
 
 # choose step with higher scope
-def choose_best_position(best_positions: Dict[int, int], random_best_position: bool, list_best_position: bool) -> List[int]:
+def choose_best_position(best_positions: Dict[int, int]) -> List[int]:
     max_value = max(best_positions.values())
     best_positions_list = [position for position, value in best_positions.items() if value == max_value]
+    return best_positions_list
+
+
+# get next best step
+def get_tic_tac_toe_best_step(board: Board, random_best_position: bool = False) -> dict:
+    best_positions = calculate_position_values(board, computer)
+    best_positions = choose_best_position(best_positions)
 
     if random_best_position:
-        return [random.choice(best_positions_list)]
-    elif list_best_position:
-        return best_positions_list
+        return {"board": board, "bestPositions": random.choice(best_positions)}
     else:
-        return [best_positions_list[0]]
+        return {"board": board, "bestPositions": best_positions[0]}
 
-
-# get next step
-def get_tic_tac_toe_best_step(board: Board, random_best_position: bool = False, list_best_position: bool = False) -> dict:
+# get next best steps
+def get_tic_tac_toe_best_step_list(board: Board) -> dict:
     best_positions = calculate_position_values(board, computer)
-    best_position = choose_best_position(best_positions, random_best_position, list_best_position)
-    return {"board": board, "bestPositions": best_position}
+    best_positions = choose_best_position(best_positions)
+
+    return {"board": board, "bestPositions": best_positions}
