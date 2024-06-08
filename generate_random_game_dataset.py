@@ -1,7 +1,7 @@
 import pandas as pd
 import random
 
-from tic_tac_toe import human, computer, default_board, is_game_finished, get_tic_tac_toe_best_step
+from tic_tac_toe import human, computer, default_board, is_game_finished, get_tic_tac_toe_best_step_list
 
 
 def generate_random_board():
@@ -51,12 +51,12 @@ def generate_random_game_dataset(count=1000):
     best_steps = []
     for _, row in df.iterrows():
         board = row.tolist()
-        best_step_result = get_tic_tac_toe_best_step(board, False, True)
+        best_step_result = get_tic_tac_toe_best_step_list(board)
         best_step = best_step_result['bestPositions']
         best_steps.append(best_step)
 
     df['best_step'] = best_steps
 
-    df.to_csv("random_tic_tac_toe_games_dataset.csv")
+    df.to_csv("optimal_steps_tic_tac_toe_games_dataset.csv")
 
     return df
