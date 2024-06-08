@@ -2,8 +2,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
+import joblib
 
-def train():
+def train_and_save_model():
     df = pd.read_csv("optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
     print(df.shape)
 
@@ -50,3 +52,7 @@ def train():
     y_test_original = df.loc[test_indices]['best_step'].tolist()
     accuracy = sum([1 if pred in actual else 0 for pred, actual in zip(y_pred, y_test_original)]) / len(y_test)
     print(f"Accuracy: {accuracy:.2f}")
+
+    # Save the model and label encoders
+    joblib.dump(model, 'tic_tac_toe_model.pkl')
+    joblib.dump(label_encoders, 'label_encoders.pkl')
