@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -5,7 +7,7 @@ from xgboost import XGBClassifier
 import joblib
 
 def train_and_save_model():
-    df = pd.read_csv("../datasets/optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
+    df = pd.read_csv("./datasets/optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
     print(df.shape)
 
     # convert string data to integer
@@ -16,7 +18,7 @@ def train_and_save_model():
         label_encoders[col] = le  # save LabelEncoder for every column
 
     # convert 'best_step' from string to list
-    df['best_step'] = df['best_step'].apply(eval)
+    df['best_step'] = df['best_step'].apply(json.loads)
 
     # Expand the dataset to include all possible best steps
     expanded_data = []
