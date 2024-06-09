@@ -14,9 +14,9 @@ label_encoders = joblib.load('model/label_encoders.pkl')
 
 def get_game_state(board: Board):
     if is_win(board, computer):
-        return 'Computer win!'
+        return 'Computer won!'
     elif is_win(board, human):
-        return'You win!'
+        return'You won!'
     elif is_full_board(board):
         return 'Tie!'
     else:
