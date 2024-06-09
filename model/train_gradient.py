@@ -55,5 +55,5 @@ def train_and_save_model():
     print(f"Accuracy: {accuracy:.2f}")
 
     # Save the model and label encoders
-    joblib.dump(model, 'tic_tac_toe_model.pkl')
-    joblib.dump(label_encoders, 'label_encoders.pkl')
+    joblib.dump(model, 'model/tic_tac_toe_model.pkl')
+    joblib.dump(label_encoders, 'model/label_encoders.pkl')
