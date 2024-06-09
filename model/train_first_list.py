@@ -4,7 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 
 def train():
-    df = pd.read_csv("optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
+    df = pd.read_csv("../datasets/optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
     print(df.shape)
 
     # convert string data to integer

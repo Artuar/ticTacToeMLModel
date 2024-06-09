@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+      border: 1px solid black;
+    }
+    button {
+      width: 100%;
+      height: 100%;
+      font-size: 24px;
+      max-width: 190px;
+    }
+  </style>
+</head>
+<body>
+<h1>Tic-Tac-Toe</h1>
+<table id="board">
+  <tr>
+    <td><button onclick="makeMove(0)"></button></td>
+    <td><button onclick="makeMove(1)"></button></td>
+    <td><button onclick="makeMove(2)"></button></td>
+  </tr>
+  <tr>
+    <td><button onclick="makeMove(3)"></button></td>
+    <td><button onclick="makeMove(4)"></button></td>
+    <td><button onclick="makeMove(5)"></button></td>
+  </tr>
+  <tr>
+    <td><button onclick="makeMove(6)"></button></td>
+    <td><button onclick="makeMove(7)"></button></td>
+    <td><button onclick="makeMove(8)"></button></td>
+  </tr>
+</table>
+<br/>
+<h2 id="state">State: game</h2>
+<br/>
+<button id="playAs" onclick="togglePlayerSign()">Play as O</button>
+<br/>
+<button onclick="restart()">restart</button>
+<script>
+  let board = Array(9).fill("").map((_,ind) => ind);
+  let playerSign = 'X'
+  let computerSign = 'O'
+  let gameState = 'game'
+
+  function makeMove(index) {
+    if (!['c', 'h'].includes(board[index]) && gameState === 'game') {
+      board[index] = 'h';
+      updateBoard();
+      fetch('/api/move', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ board: board }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        board[data.move] = 'c';
+        updateBoard();
+        updateGameState(data.state)
+      });
+    }
+  }
+
+  function updateBoard() {
+    const buttons = document.querySelectorAll('#board button');
+    buttons.forEach((button, index) => {
+      button.textContent = board[index] === 'h' ? playerSign : board[index] === 'c' ? computerSign : "";
+    });
+  }
+
+  function updateGameState(newState) {
+    gameState = newState
+    state.textContent = `State: ${newState}`
+  }
+
+  function restart() {
+    board = Array(9).fill("").map((_,ind) => ind);
+    updateBoard();
+    updateGameState('game')
+    if (playerSign === "O") {
+      makeMove()
+    }
+  }
+
+  function togglePlayerSign() {
+    playerSign = playerSign === "X" ? "O" : "X"
+    computerSign = playerSign === "X" ? "O" : "X"
+    playAs.textContent = `Play as ${computerSign}`
+    restart()
+  }
+</script>
+</body>
+</html>

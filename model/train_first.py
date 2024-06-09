@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 def train():
-    df = pd.read_csv("random_step_tic_tac_toe_games_dataset.csv", index_col=0)
+    df = pd.read_csv("../datasets/random_step_tic_tac_toe_games_dataset.csv", index_col=0)
     print(df.shape)
 
     # convert string data to integer

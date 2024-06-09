@@ -5,7 +5,7 @@ from xgboost import XGBClassifier
 import joblib
 
 def train_and_save_model():
-    df = pd.read_csv("optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
+    df = pd.read_csv("../datasets/optimal_steps_tic_tac_toe_games_dataset.csv", index_col=0)
     print(df.shape)
 
     # convert string data to integer
