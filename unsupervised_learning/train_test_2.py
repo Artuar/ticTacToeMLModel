@@ -22,27 +22,6 @@ def find_lines(image):
     lines = cv2.HoughLinesP(image, 1, np.pi / 180, threshold=50, minLineLength=20, maxLineGap=5)
     return lines
 
-def classify_cells(image, cells):
-    classifications = []
-    for idx, (x, y, w, h, cell, area, aspect_ratio) in enumerate(cells):
-        cell_img = image[y:y + h, x:x + w]
-        lines = find_lines(cell_img)
-
-        if lines is None:
-            classifications.append('O')
-        else:
-            if len(lines) >= 2:
-                classifications.append('X')
-            else:
-                classifications.append('O')
-
-    largest_area = max(cells, key=lambda cell: cell[5])[5]
-    for idx, cell in enumerate(cells):
-        if cell[5] == largest_area:
-            classifications[idx] = 'grid'
-            break
-
-    return classifications
 
 # extra cluster 1 grouping
 def reclassify_cluster_1_in_images(image_cells, labels, all_cells):
