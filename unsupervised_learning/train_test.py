@@ -18,11 +18,6 @@ def extract_grid_and_cells(image, contours):
             cells.append((x, y, w, h, cell.flatten(), cv2.contourArea(contour), w / h))
     return cells
 
-def find_lines(image):
-    lines = cv2.HoughLinesP(image, 1, np.pi / 180, threshold=80, minLineLength=25, maxLineGap=10)
-    return lines
-
-
 def clustering():
     image_folder = 'unsupervised_learning/board_images/'
     images = load_images(image_folder)
